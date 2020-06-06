@@ -145,6 +145,20 @@ def edit_execl(readexecl,editexecl):
     print("---cols_new----")
     print(new_cols)
 
+#在编辑好的"sourceexecl"表格中查找我持仓的基金的数据,返回该数据集，并用于画图
+def get_myfunds(sourceexecl,myfunds_list,*col):
+    #读取处理过的数据文件
+    mydata = pd.read_excel(sourceexecl+'.xls', sheet_name=0)
+    mydata1 = pd.DataFrame(mydata)
+    pdata=pd.DataFrame(mydata1, columns=col)
+    pdata1=pd.DataFrame(columns=col)
+    for my_fund in myfunds_list:
+        for row in pdata.iterrows():
+            if my_fund == str(row[1]):
+                row1 = dict(row)
+                pdata1 = pdata1.append(row1, ignore_index=True)
+    return pdata1
+
 #对编辑好的"sourceexecl"表格，选择5列, 进行TOPN排序，并取交集,并保存为"sortexecl"表格。
 def sort_execl(sourceexecl, sortexecl, first, second, third, forth, fifth, topn=200):
     #读取增加了10列的execl表格
@@ -228,6 +242,9 @@ if __name__ == '__main__':
     #对年份进行排序取交集保存的execl名称
     sort1execl="find_year_sort"
 
+    #我目前持仓的基金列表
+    my_funds = ("005275", "162605", "001076", "110011", "270050", "000083", "519674", "486001")
+
     #调用函数，打开url
     driver=open_url(url)
 
@@ -252,3 +269,7 @@ if __name__ == '__main__':
     ysort=sort_execl(editexecl, sort1execl, '自选', '最近1年', '最近1-2年', '最近2-3年', '从前', 1000)
     ylist=['序号', '基金代码', '基金简称', '日期', '自选','最近1年','最近1-2年','最近2-3年','从前']
     pic_execl(ysort, "yearsort",9 , *ylist)
+
+    #将我持仓的基金的最新数据获取，画图
+    my_cur_funds=get_myfunds(editexecl, my_funds, *mlist)
+    pic_execl(my_cur_funds, "my_funds", -1, *mlist)
