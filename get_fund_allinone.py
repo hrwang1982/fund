@@ -146,16 +146,17 @@ def edit_execl(readexecl,editexecl):
     print(new_cols)
 
 #在编辑好的"sourceexecl"表格中查找我持仓的基金的数据,返回该数据集，并用于画图
-def get_myfunds(sourceexecl,myfunds_list,*col):
+def get_myfunds(sourceexecl,myfunds_list,col):
     #读取处理过的数据文件
     mydata = pd.read_excel(sourceexecl+'.xls', sheet_name=0)
     mydata1 = pd.DataFrame(mydata)
     pdata=pd.DataFrame(mydata1, columns=col)
     pdata1=pd.DataFrame(columns=col)
     for my_fund in myfunds_list:
-        for row in pdata.iterrows():
+        for index,row in pdata.iterrows():
             if my_fund == str(row[1]):
                 row1 = dict(row)
+                print(row1)
                 pdata1 = pdata1.append(row1, ignore_index=True)
     return pdata1
 
@@ -207,10 +208,12 @@ def sort_execl(sourceexecl, sortexecl, first, second, third, forth, fifth, topn=
 def pic_execl(pddata,picname,wz,*col):
     #pdata = pd.DataFrame(pddata,columns=['序号', '基金代码', '基金简称', '日期', '自选', '最近1月', '最近2-3月', '最近4-6月', '最近7-12月', '最近1-2年', '最近2-3年', '从前'])
     pdata = pd.DataFrame(pddata,columns=col)
-
+    # print ("--pdata---")
+    # print(pdata)
     #横坐标是代表周期的列名，从0开始，这里是从4开始，到传入的位置截至。 如上面的列子是从："自选"开始
     xtime = pdata.columns.values[4:wz]
-
+    # print("---xtime---")
+    # print(xtime)
     #取每一行的数据组成曲线图，并将"基金代码，基金简称" 作为曲线名称
     for index, row in pdata.iterrows():
         # print(list(row)[5:-1])
@@ -242,34 +245,34 @@ if __name__ == '__main__':
     #对年份进行排序取交集保存的execl名称
     sort1execl="find_year_sort"
 
-    #我目前持仓的基金列表
-    my_funds = ("005275", "162605", "001076", "110011", "270050", "000083", "519674", "486001")
+    #我目前持仓的基金列表，注意基金代码前面的0要去掉
+    my_funds = ("5275", "162605", "1076", "110011", "270050", "83", "519674", "486001")
 
     #调用函数，打开url
-    driver=open_url(url)
+    driver = open_url(url)
 
-    #调用函数将基金信息保存到table_context中
-    table_context=get_table(driver)
+    # #调用函数将基金信息保存到table_context中
+    table_context = get_table(driver)
 
-    #调用函数，将基金信息保存到execl中
-    write_excle(sourceexecl,table_context)
+    # #调用函数，将基金信息保存到execl中
+    write_excle(sourceexecl, table_context)
 
-    #退出chrome
+    # #退出chrome
     driver.quit()
 
-    #编辑基金信息，增加10列
+    # #编辑基金信息，增加10列
     edit_execl(sourceexecl,editexecl)
 
     #按照月进行交集获取，并画图
     msort=sort_execl(editexecl,sortexecl,'最近1月','最近2-3月','最近4-6月','最近7-12月','最近1年',200)
     mlist=['序号', '基金代码', '基金简称', '日期', '最近1月','最近2-3月','最近4-6月','最近7-12月','最近1年']
-    pic_execl(msort,"monthsort",-1,*mlist)
+    pic_execl(msort,"monthsort", 9, *mlist)
 
     #按照年进行交集获取，并画图
     ysort=sort_execl(editexecl, sort1execl, '自选', '最近1年', '最近1-2年', '最近2-3年', '从前', 1000)
     ylist=['序号', '基金代码', '基金简称', '日期', '自选','最近1年','最近1-2年','最近2-3年','从前']
-    pic_execl(ysort, "yearsort",9 , *ylist)
+    pic_execl(ysort, "yearsort", 9, *ylist)
 
     #将我持仓的基金的最新数据获取，画图
-    my_cur_funds=get_myfunds(editexecl, my_funds, *mlist)
-    pic_execl(my_cur_funds, "my_funds", -1, *mlist)
+    my_cur_funds=get_myfunds(editexecl, my_funds, mlist)
+    pic_execl(my_cur_funds, "my_funds", 9, *mlist)
