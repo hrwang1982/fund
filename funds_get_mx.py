@@ -581,7 +581,7 @@ if __name__ == '__main__':
     lasttrans_day=driver.find_element_by_xpath('//*[@id="jztable"]/table/tbody/tr[1]/td[1]').text
 
     #读取最全的基金的信息，并转换成pd
-    edit_funds=pd.read_excel(r"C:\工作\pychram\111\fund_get\2020-07-11\fundedit.xls")
+    edit_funds=pd.read_excel(r"C:\工作\pychram\111\fund_get\data\2020-07-11\fundedit.xls")
     #创建一个pd，只包含两列数据
     all_funds=edit_funds[['基金代码','基金简称']]
 
