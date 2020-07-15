@@ -228,7 +228,7 @@ def pic_execl(pddata,picname,wz,*col):
 
 def main():
     #混合型
-    #url = "http://fund.eastmoney.com/data/fundranking.html#thh;c0;r;s1nzf;pn10000;ddesc;qsd20180501;qed20181231"
+    #url = a"http://fund.eastmoney.com/data/fundranking.html#thh;c0;r;s1nzf;pn10000;ddesc;qsd20180501;qed20181231"
     #全部
     url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20180501;qed20181231;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
 
@@ -246,7 +246,7 @@ if __name__ == '__main__':
     sort1execl="find_year_sort"
 
     #我目前持仓的基金列表，注意基金代码前面的0要去掉
-    my_funds = ("5275", "162605", "1076", "110011", "270050", "83", "519674", "486001")
+    my_funds = ("5275", "162605", "110011", "270050", "83", "519674", "486001", "727")
 
     #调用函数，打开url
     driver = open_url(url)
