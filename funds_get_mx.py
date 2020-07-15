@@ -292,7 +292,7 @@ def fund_rate(fundlist,type,daytype,daynum):
             howlong=6
             
         m = 0
-        while m < howlong :
+        while m < howlong:
                 fund_index1 =  fund_index1 + daynum
                 fund_day = fund_xx.loc[fund_index1,'净值日期']
                 fund_idxname.append(fund_day)
