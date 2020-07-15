@@ -39,7 +39,7 @@ tmp_funds1=pd.DataFrame(columns=["基金代码","基金简称","净值日期", "
 #将上次的读取的全量基金详情加载进来
 tmp_funds1=pd.read_excel(r"C:\fund_mx_get\all_fund_20200714_1.xlsx", encoding='utf-8')
 #将包含全量基金明细数据中的基金代码都转换成6位，左侧补0，如5275补充完后是005275
-tmp_funds1['基金代码']= tmp_funds1['基金代码'].map(lambda x : str(x).zfill(6) ) 
+tmp_funds1['基金代码'] = tmp_funds1['基金代码'].map(lambda x: str(x).zfill(6) )
 
 #这个k是多线程抓取所有基金信息的初始index，因为要将新抓的合并程一个统一的文件，所以先读取老的，然后基于老的继续添加
 k=len(tmp_funds1)
@@ -635,16 +635,16 @@ if __name__ == '__main__':
         driver2 = webdriver.Chrome(executable_path=chrome_driver2)
 
         '''
-        启动第一个线程，该线程使用驱动器1，将参数传给多线程抓取函数，处理第一部分基金，抓取3页（60个工作日的基金明细），
+        启动第一个线程，该线程使用驱动器1，将参数传给多线程抓取函数，处理第一部分基金，抓取1页（20个工作日的基金明细），
         多线程处理抓取的数据结果会放置到全局变量的tmp_funds1 的pd中
         '''
         print("开始多线程抓取时间：")
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        t1 = threading.Thread(target=getfund_mingxi_mt , args=(funds_part1,driver1,3))
+        t1 = threading.Thread(target=getfund_mingxi_mt , args=(funds_part1,driver1,1))
         t1.start()
-        t2 = threading.Thread(target=getfund_mingxi_mt , args=(funds_part2,driver2,3))
+        t2 = threading.Thread(target=getfund_mingxi_mt , args=(funds_part2,driver2,1))
         t2.start()
-        t3 = threading.Thread(target=getfund_mingxi_mt , args=(funds_part3,driver3,3))
+        t3 = threading.Thread(target=getfund_mingxi_mt , args=(funds_part3,driver3,1))
         t3.start()
         t1.join()
         t2.join()
@@ -686,8 +686,8 @@ if __name__ == '__main__':
     # In[ ]:
 
 
-    #将所有基金的明细，按月计算增幅，每周22个工作日， 取最近2月每周的涨幅
-    all_m_rate1 = fund_rate_mt(tmp_funds1,"week","WD",22,2)
+    #将所有基金的明细，按月计算增幅，每周23个工作日， 取最近2月每月的涨幅
+    all_m_rate1 = fund_rate_mt(tmp_funds1, "week", "WD", 23, 2)
     #将所有基金月涨幅，取最近2月，每月top200，求交集
     all_month_sort_rate = fund_rate_sort(all_m_rate1,2,200)
 
