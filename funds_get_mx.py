@@ -16,6 +16,7 @@ import time
 import pandas as pd
 import datetime as datetime
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import WebDriverException
 import threading
 import openpyxl
 
@@ -333,7 +334,7 @@ def fund_rate(fundlist,type,daytype,daynum):
 
     #按照datetype=CD来处理
     else:
-        echo("I don't finish this part")
+        print("I don't finish this part")
         #if type=="week":
         
         #按照type=="month"来处理
@@ -423,7 +424,7 @@ def fund_rate_mt(fundlist,type,daytype,daynum,period_n):
 
     #按照datetype=CD来处理
     else:
-        echo("I don't finish this part")
+        print("I don't finish this part")
         #if type=="week":
         
         #按照type=="month"来处理
