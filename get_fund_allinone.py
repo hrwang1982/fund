@@ -235,7 +235,9 @@ def main():
 
 if __name__ == '__main__':
     #获取基金信息的url，其中的20180501 - 20181231 是自定义的周期时间
-    url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20180501;qed20181231;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
+    #url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20180501;qed20181231;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
+    # 其中的20200713 - 20200717 是自定义的周期时间，该周期13号涨，14、15跌，16号暴跌，17号小跌
+    url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20200713;qed20200717;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
     #基金信息获取后，保存到该名称的execl中
     sourceexecl="fundsave"
     #对获取的基金信息进行编辑，增加10列后保存的execl名称
@@ -246,7 +248,7 @@ if __name__ == '__main__':
     sort1execl="find_year_sort"
 
     #我目前持仓的基金列表，注意基金代码前面的0要去掉
-    my_funds = ("5275", "162605", "110011", "270050", "83", "519674", "486001", "727")
+    my_funds = ("5275", "162605", "110011", "270050", "83", "519674", "486001", "727", "1679", "977")
 
     #调用函数，打开url
     driver = open_url(url)
@@ -264,8 +266,8 @@ if __name__ == '__main__':
     edit_execl(sourceexecl,editexecl)
 
     #按照月进行交集获取，并画图
-    msort=sort_execl(editexecl,sortexecl,'最近1月','最近2-3月','最近4-6月','最近7-12月','最近1年',200)
-    mlist=['序号', '基金代码', '基金简称', '日期', '最近1月','最近2-3月','最近4-6月','最近7-12月','最近1年']
+    msort=sort_execl(editexecl,sortexecl,'最近1月','最近2-3月','最近4-6月','最近7-12月','自选',200)
+    mlist=['序号', '基金代码', '基金简称', '日期', '最近1月','最近2-3月','最近4-6月','最近7-12月','自选']
     pic_execl(msort,"monthsort", 9, *mlist)
 
     #按照年进行交集获取，并画图
