@@ -241,7 +241,8 @@ if __name__ == '__main__':
     # 其中的2020810 - 20200821 是自定义的周期时间，这两周都是周一、周二涨，周三周四跌，
     #url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20200810;qed20200821;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
     # 其中的2020921 - 20200930 是自定义的周期时间，这两周都是比较平淡
-    url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20200921;qed20200930;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
+    #url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20200921;qed20200930;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
+    url = "http://fund.eastmoney.com/data/fundranking.html#tall;c0;r;s1nzf;pn10000;ddesc;qsd20201209;qed20201211;qdii;zq;gg;gzbd;gzfs;bbzt;sfbb"
 
     #基金信息获取后，保存到该名称的execl中
     sourceexecl="fundsave"
